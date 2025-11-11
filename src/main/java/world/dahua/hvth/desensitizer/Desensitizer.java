@@ -1,7 +1,7 @@
 package world.dahua.hvth.desensitizer;
 
 
-import world.dahua.hvth.SensitiveType;
+import world.dahua.hvth.base.SensitiveType;
 import world.dahua.hvth.utils.StrUtil;
 
 import java.text.ParseException;

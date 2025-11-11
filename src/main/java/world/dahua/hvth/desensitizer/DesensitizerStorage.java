@@ -2,7 +2,7 @@ package world.dahua.hvth.desensitizer;
 
 
 import org.springframework.stereotype.Component;
-import world.dahua.hvth.SensitiveType;
+import world.dahua.hvth.base.SensitiveType;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

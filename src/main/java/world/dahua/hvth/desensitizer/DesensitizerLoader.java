@@ -5,7 +5,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
-import world.dahua.hvth.SensitiveType;
+import world.dahua.hvth.base.SensitiveType;
 
 /**
  * auth: dahua

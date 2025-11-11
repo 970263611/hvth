@@ -1,4 +1,4 @@
-package world.dahua.hvth;
+package world.dahua.hvth.base;
 
 public enum SensitiveType {
 
@@ -23,8 +23,5 @@ public enum SensitiveType {
     DSSZ_PREFIX,
     DSSZ_INDEX,
     DSSZ_SUFFIX,
-    /**
-     * 默认
-     */
-    VOID
+    NONE
 }
