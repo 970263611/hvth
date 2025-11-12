@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+world.dahua.hvth.config.HvthAutoConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=\
+world.dahua.hvth.log.logback.LogConverterRegister4Logback

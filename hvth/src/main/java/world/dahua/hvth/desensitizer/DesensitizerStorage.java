@@ -19,4 +19,12 @@ public class DesensitizerStorage {
     public void register(SensitiveType type, Desensitizer desensitizer) {
         converters.put(type, desensitizer);
     }
+
+    public Desensitizer findDesensitizer(SensitiveType sensitiveType) {
+        Desensitizer desensitizer = converters.get(sensitiveType);
+        if (desensitizer == null) {
+            throw new IllegalArgumentException(sensitiveType.toString());
+        }
+        return desensitizer;
+    }
 }

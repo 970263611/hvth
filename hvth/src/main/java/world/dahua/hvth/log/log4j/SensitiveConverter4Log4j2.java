@@ -3,7 +3,10 @@ package world.dahua.hvth.log.log4j;
 
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.appender.rewrite.RewritePolicy;
+import org.apache.logging.log4j.core.config.plugins.Plugin;
+import org.apache.logging.log4j.core.config.plugins.PluginFactory;
 import org.apache.logging.log4j.core.impl.Log4jLogEvent;
+import org.apache.logging.log4j.core.pattern.ConverterKeys;
 import org.apache.logging.log4j.message.Message;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 import world.dahua.hvth.desensitizer.DesensitizerManager;
@@ -15,7 +18,13 @@ import java.util.Arrays;
  * auth: dahua
  * time: 2025/11/10 14:16
  */
-public class SensitiveConverterForLog4j implements RewritePolicy {
+@Plugin(name = "SensitiveConverter4Log4j", category = "Core", elementType = "rewritePolicy", printObject = true)
+public class SensitiveConverter4Log4j2 implements RewritePolicy {
+
+    @PluginFactory
+    public static SensitiveConverter4Log4j2 create() {
+        return new SensitiveConverter4Log4j2();
+    }
 
     @Override
     public LogEvent rewrite(LogEvent logEvent) {

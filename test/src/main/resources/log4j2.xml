@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug" packages="world.dahua.hvth.log.log4j">
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="LOG_FILE_PATH">logs</Property>
+    </Properties>
+
+    <!-- 第一步：先定义所有目标 Appender（ConsoleAppender 独立定义） -->
+    <Appenders>
+        <!-- 控制台 Appender：独立定义，供 RewriteAppender 引用 -->
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+        </Console>
+
+        <!-- 第二步：定义 RewriteAppender，引用 RewritePolicy 和 AppenderRef -->
+        <Rewrite name="SensitiveConverter4Log4jName">
+            <SensitiveConverter4Log4j /> <!-- 自定义改写策略（日志已显示加载成功） -->
+            <AppenderRef ref="ConsoleAppender" /> <!-- 引用外部定义的 ConsoleAppender -->
+        </Rewrite>
+    </Appenders>
+
+    <!-- 第三步：根日志引用 RewriteAppender -->
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="SensitiveConverter4Log4jName" /> <!-- 只引用 RewriteAppender -->
+        </Root>
+    </Loggers>
+</Configuration>

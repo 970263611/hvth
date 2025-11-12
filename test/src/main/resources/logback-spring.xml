@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- scan="true"配置文件如果发生变化，将被重新加载，默认为true. -->
+<!-- scanPeriod="30 seconds" 自动扫描周期 -->
+<!-- debug为true，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
+<configuration debug="false" scan="false" scanPeriod="30 seconds">
+  <!-- springProperty可以读取application.yml中的属性-->
+  <springProperty defaultValue="appName" name="APP_NAME" scope="context"
+    source="spring.application.name"/>
+  <springProperty defaultValue="instanceId" name="INSTANCE_ID" scope="context"
+    source="plt.instance-id"/>
+  <springProperty defaultValue="dataCenter" name="DATA_CENTER"
+    scope="context" source="spring.cloud.nacos.discovery.metadata.data-center"/>
+  <!-- 设置变量（日志存放位置） -->
+  <conversionRule conversionWord="clr"
+    converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+  <conversionRule conversionWord="wEx"
+    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+  <conversionRule conversionWord="m"
+    converterClass="world.dahua.hvth.log.logback.SensitiveConverter4Logback"/>
+  <property name="LOG_EXCEPTION_CONVERSION_WORD" value="%wEx"/>
+  <property name="LOG_LEVEL_PATTERN" value="%5p"/>
+  <property name="LOG_DIR" value="${LOG_PATH:-.}/logs"/>
+  <property name="LOG_FILE_PREFIX" value="${APP_NAME}-trace"/>
+  <property name="LOG_FILE" value="${LOG_DIR}/${APP_NAME}-trace.log"/>
+
+  <property name="CONSOLE_LOG_PATTERN"
+    value="%clr(%d{yyyyMMdd HH:mm:ss.SSS}){faint}|%clr(${LOG_LEVEL_PATTERN})|%clr(${DATA_CENTER}){magenta}|${INSTANCE_ID}|${APP_NAME}|%yellow(%X{GLOBAL_BUSI_TRACK_NO:-notSet})|%X{SUB_TX_TRACK_NO:-notSet}|%clr(${PID}){magenta}|%X{TX_CODE}|%t|%clr(%-40.40logger{39}){cyan}|MSG=%m%n"/>
+  <property name="FILE_LOG_PATTERN"
+    value="%d{yyyyMMdd HH:mm:ss.SSS}|${LOG_LEVEL_PATTERN}|${DATA_CENTER}|${INSTANCE_ID}|${APP_NAME}|%X{GLOBAL_BUSI_TRACK_NO:-notSet}|%X{SUB_TX_TRACK_NO:-notSet}|${PID}|%t|%-40.40logger{39}|MSG=%m%n"/>
+
+  <!-- 控制台日志配置 -->
+  <appender class="ch.qos.logback.core.ConsoleAppender" name="CONSOLE">
+    <encoder>
+      <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+      <charset>utf8</charset>
+    </encoder>
+  </appender>
+
+  <!-- 日志文件配置 -->
+  <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="ROLLING_FILE">
+    <encoder>
+      <Pattern>${FILE_LOG_PATTERN}</Pattern>
+      <charset>utf8</charset>
+    </encoder>
+    <file>${LOG_FILE}</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_DIR}/%d{yyyy-MM, aux}/${APP_NAME}-trace-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+      <!--每个日志文件的大小-->
+      <maxFileSize>32MB</maxFileSize>
+      <!--日志文件保留从天数-->
+      <maxHistory>60</maxHistory>
+      <!--保留的总的日志文件大小-->
+      <totalSizeCap>30GB</totalSizeCap>
+      <cleanHistoryOnStart>true</cleanHistoryOnStart>
+    </rollingPolicy>
+  </appender>
+  <appender class="ch.qos.logback.classic.AsyncAppender" name="ASYNC">
+    <discardingThreshold>0</discardingThreshold>
+    <queueSize>1024</queueSize>
+    <neverBlock>true</neverBlock>
+    <appender-ref ref="ROLLING_FILE"/>
+  </appender>
+
+  <!-- rocketmq日志 -->
+  <appender name="RocketmqClientAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_DIR}/client/rocketmq_client.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_DIR}/client/history/rocketmq_client.%d{yyyyMMdd}.%i.log.gz</fileNamePattern>
+      <maxFileSize>32MB</maxFileSize>
+      <!--保留时间,单位:天-->
+      <maxHistory>30</maxHistory>
+      <totalSizeCap>10GB</totalSizeCap>
+      <cleanHistoryOnStart>true</cleanHistoryOnStart>
+    </rollingPolicy>
+    <encoder charset="UTF-8">
+      <pattern>%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %-22c{0} %X{ServiceId} - %m%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="RocketmqClient" additivity="false">
+    <level value="warn" />
+    <appender-ref ref="RocketmqClientAppender"/>
+  </logger>
+
+  <!-- 根日志记录器 -->
+  <root level="INFO">
+    <appender-ref ref="ASYNC"/>
+    <appender-ref ref="CONSOLE"/>
+  </root>
+
+</configuration>

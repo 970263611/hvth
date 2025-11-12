@@ -30,7 +30,21 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    class None implements Desensitizer {
+        @Override
+        public String desensitize(String sensitisation) {
+            return sensitisation;
+        }
+
+        @Override
+        public SensitiveType type() {
+            return SensitiveType.NONE;
+        }
+    }
+
+
+    @Component
+    @ConditionalOnMissingBean(Desensitizer.FinancialAccount.class)
     class FinancialAccount implements Desensitizer.FinancialAccount {
         @Override
         public SensitiveType type() {
@@ -39,7 +53,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.EnterpriseAccountName.class)
     class EnterpriseAccountName implements Desensitizer.EnterpriseAccountName {
         @Override
         public SensitiveType type() {
@@ -48,7 +62,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.Email.class)
     class Email implements Desensitizer.Email {
         @Override
         public SensitiveType type() {
@@ -57,7 +71,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.DsszSuffix.class)
     class DsszSuffix implements Desensitizer.DsszSuffix {
         @Override
         public SensitiveType type() {
@@ -66,7 +80,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.DsszIndex.class)
     class DsszIndex implements Desensitizer.DsszIndex {
         @Override
         public SensitiveType type() {
@@ -75,7 +89,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.ChineseName.class)
     class ChineseName implements Desensitizer.ChineseName {
         @Override
         public SensitiveType type() {
@@ -84,7 +98,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.DsszPrefix.class)
     class DsszPrefix implements Desensitizer.DsszPrefix {
         @Override
         public SensitiveType type() {
@@ -93,7 +107,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.Address.class)
     class Address implements Desensitizer.Address {
         @Override
         public SensitiveType type() {
@@ -102,7 +116,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.Amount.class)
     class Amount implements Desensitizer.Amount {
         @Override
         public SensitiveType type() {
@@ -111,7 +125,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.BankCard.class)
     class BankCard implements Desensitizer.BankCard {
         @Override
         public SensitiveType type() {
@@ -120,7 +134,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.Date.class)
     class Date implements Desensitizer.Date {
         @Override
         public SensitiveType type() {
@@ -129,7 +143,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.CarLicense.class)
     class CarLicense implements Desensitizer.CarLicense {
         @Override
         public SensitiveType type() {
@@ -138,7 +152,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.VatNo.class)
     class VatNo implements Desensitizer.VatNo {
         @Override
         public SensitiveType type() {
@@ -147,7 +161,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.VatBankNo.class)
     class VatBankNo implements Desensitizer.VatBankNo {
         @Override
         public SensitiveType type() {
@@ -156,7 +170,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.UserId.class)
     class UserId implements Desensitizer.UserId {
         @Override
         public SensitiveType type() {
@@ -165,7 +179,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.Password.class)
     class Password implements Desensitizer.Password {
         @Override
         public SensitiveType type() {
@@ -174,7 +188,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.PassportNo.class)
     class PassportNo implements Desensitizer.PassportNo {
         @Override
         public SensitiveType type() {
@@ -183,7 +197,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.PassbookAccount.class)
     class PassbookAccount implements Desensitizer.PassbookAccount {
         @Override
         public SensitiveType type() {
@@ -192,7 +206,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.MobilePhone.class)
     class MobilePhone implements Desensitizer.MobilePhone {
         @Override
         public SensitiveType type() {
@@ -201,7 +215,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.IdCard.class)
     class IdCard implements Desensitizer.IdCard {
         @Override
         public SensitiveType type() {
@@ -210,7 +224,7 @@ public class DesensitizerLoader implements BeanPostProcessor {
     }
 
     @Component
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(Desensitizer.FixedPhone.class)
     class FixedPhone implements Desensitizer.FixedPhone {
         @Override
         public SensitiveType type() {

@@ -1,0 +1,8 @@
+hvth:
+  rules:
+    - regex: '\d+'
+      type: MOBILE_PHONE
+    - regex: '[\u4e00-\u9fa5]+'
+      type: ADDRESS
+  excludeClass:
+    - world.dahua.hvth.entity.DemoRequest
